@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Flores Hub" />
+    <meta property="og:title" content="Flores Hub · First look" />
+    <meta property="og:description" content="Every home journey, in one calm place. An early preview for Anela and the Flores Property Group team." />
+    <link rel="apple-touch-icon" href="./flores-logo.png" />
+    <meta name="theme-color" content="#f8f9f6" />
+    <meta name="description" content="A first look at the Flores Property Group transaction hub: one calm place for every home journey." />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Flores Hub · First look</title>
+    <link rel="icon" type="image/png" href="./flores-logo.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="preload" href="/src/assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/src/assets/fonts/lora-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      html,body{margin:0;background:#f8f9f6}
+      .boot{min-height:100vh;display:flex;flex-direction:column}
+      .is-landing .boot{display:none}
+      .boot-top{height:56px;border-bottom:1px solid #e1e4d8;background:#fff}
+      .boot-body{flex:1;display:flex;flex-direction:column;gap:16px;padding:20px 16px;max-width:760px;width:100%;box-sizing:border-box;margin:0 auto}
+      .boot i{display:block;border-radius:12px;background:linear-gradient(90deg,#f3f5ee 25%,#fff 50%,#f3f5ee 75%);background-size:200% 100%;animation:boot-shimmer 1.2s linear infinite}
+      .boot .b-t{width:70%;height:32px}.boot .b-l{width:45%;height:16px}.boot .b-c{height:96px;border:1px solid #e1e4d8}
+      .boot-bar{height:64px;border-top:1px solid #e1e4d8;background:#fff}
+      @keyframes boot-shimmer{to{background-position:-200% 0}}
+      @media (min-width:761px){.boot-bar{display:none}}
+      @media (prefers-reduced-motion:reduce){.boot i{animation:none}}
+    </style>
+  </head>
+  <body>
+    <script>if(!/^#\/app/.test(location.hash)){document.documentElement.className="is-landing"}</script>
+    <div id="root"><div class="boot" aria-hidden="true"><div class="boot-top"></div><div class="boot-body"><i class="b-t"></i><i class="b-l"></i><i class="b-c"></i><i class="b-c"></i><i class="b-c"></i></div><div class="boot-bar"></div></div></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

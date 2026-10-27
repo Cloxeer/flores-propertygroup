@@ -1,0 +1,205 @@
+/* Overview redesign — Hick's law: one list of what needs attention, one agenda, one glance.
+   8px spacing grid, type tokens from hub.css (--fs-*), AA-contrast text. */
+
+:root {
+  --text-strong: #2b332d;
+  --text-muted: #5a665a;
+  --surface: #fff;
+  --surface-tint: #f3f5ee;
+  --line: #e1e4d8;
+}
+
+.summary-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0 0 24px;
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+.summary-line strong {
+  color: var(--text-strong);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.attention-panel,
+.pipeline-glance {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+}
+.attention-panel > header,
+.pipeline-glance > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.attention-panel h2,
+.pipeline-glance h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-family: Lora, serif;
+  font-size: var(--fs-xl);
+  font-weight: 500;
+}
+.attention-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 14px;
+  background: var(--clay);
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.attention-panel ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.attention-panel li button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) 16px;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 72px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-tint);
+  color: var(--text-strong);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+.attention-panel li button:hover {
+  border-color: var(--clay);
+}
+.attention-panel li button:active {
+  transform: scale(0.99);
+}
+.attention-deal,
+.attention-step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: var(--fs-sm);
+}
+.attention-deal strong {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+.attention-deal span,
+.attention-step small {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+.attention-step {
+  color: var(--clay);
+  font-weight: 500;
+}
+.attention-clear {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+.attention-panel > .text-button {
+  margin-top: 16px;
+}
+
+.pipeline-glance ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pipeline-glance li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--surface-tint);
+}
+.pipeline-glance li strong {
+  color: var(--text-strong);
+  font-family: Lora, serif;
+  font-size: var(--fs-3xl);
+  font-weight: 500;
+  line-height: 1;
+}
+.pipeline-glance li span {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+@media (max-width: 760px) {
+  .attention-panel,
+  .pipeline-glance {
+    padding: 16px;
+  }
+  .attention-panel li button {
+    grid-template-columns: minmax(0, 1fr) 16px;
+  }
+  .attention-step {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .attention-panel li button > svg {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .pipeline-glance ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Sidebar: five primary links, everything else behind one "More" disclosure. */
+.sidebar-more {
+  margin-top: 8px;
+}
+.sidebar-more > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  list-style: none;
+}
+.sidebar-more > summary::-webkit-details-marker {
+  display: none;
+}
+.sidebar-more > summary:hover {
+  background: var(--surface-tint);
+}
+.sidebar nav button {
+  min-height: 44px;
+}

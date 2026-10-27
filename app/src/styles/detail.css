@@ -1,0 +1,94 @@
+/* Deal detail redesign — one next step, one progress bar, everything else folded away. */
+
+.tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tracker-next {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-tint);
+}
+.tracker-eyebrow {
+  color: var(--clay);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tracker-next h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-family: Lora, serif;
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+}
+.tracker-next p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+.tracker-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tracker-progress ol {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+.tracker-progress li {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
+}
+.tracker-progress li.done {
+  background: var(--sage);
+}
+.tracker-progress li.current {
+  background: var(--clay);
+}
+.tracker-progress p {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.milestone-all > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--clay);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.milestone-all[open] > summary {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 760px) {
+  .tracker-next {
+    padding: 16px;
+  }
+  .tracker-actions .button {
+    flex: 1 1 100%;
+  }
+}

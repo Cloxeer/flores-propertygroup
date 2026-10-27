@@ -1,0 +1,109 @@
+/* Client view redesign — a trip-tracker feel: one next step, one progress bar, finished steps folded away. */
+
+.client-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.client-brief {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.client-brief img {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+.client-brief h1 {
+  margin: 4px 0 8px;
+  color: var(--text-strong);
+  font-family: Lora, serif;
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.client-brief p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.client-next {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-tint);
+}
+.client-next h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-family: Lora, serif;
+  font-size: var(--fs-xl);
+  font-weight: 500;
+}
+.client-next p {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+
+.client-done {
+  margin-bottom: 8px;
+}
+.client-done > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--clay);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.client-safety {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f8f0dc;
+  color: #5b4a1f;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+.client-safety svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+@media (max-width: 760px) {
+  .client-brief img {
+    width: 72px;
+    height: 72px;
+  }
+  .client-next {
+    padding: 16px;
+  }
+  .client-next .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+.client-brief p svg {
+  flex: none;
+  margin-top: 3px;
+}
