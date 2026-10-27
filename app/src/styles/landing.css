@@ -164,3 +164,27 @@
     padding: 0 24px;
   }
 }
+
+.error-screen {
+  justify-content: center;
+}
+.error-details {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+.error-details summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+}
+.error-details pre {
+  margin: 8px 0 0;
+  padding: 12px;
+  overflow: auto;
+  border-radius: 12px;
+  background: var(--surface-tint);
+  white-space: pre-wrap;
+  word-break: break-word;
+}

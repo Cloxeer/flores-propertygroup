@@ -4,11 +4,12 @@
  * Owns: layout composition and route-to-view switching for the hub routes.
  * Depends on: HubSidebar, HubTopBar, HubTransactionsView, HubInfoDialogs, page components, HubContext, wouter.
  */
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { LockKeyhole } from "lucide-react";
 import { useLocation, useSearch } from "wouter";
 import { useHub } from "@/contexts/HubContext";
 import { PageSkeleton } from "@/components/hub/PageSkeleton";
+import { lazyPage } from "@/lib/lazy-page";
 import { todayInDenver } from "@/lib/dates";
 import { Dashboard } from "@/components/hub/Dashboard";
 import { HelpDialog, NotificationsDialog } from "@/components/hub/HubInfoDialogs";
@@ -23,17 +24,17 @@ import { HubTransactionsView } from "@/components/hub/HubTransactionsView";
 
 /** The five everyday screens ship with the shell so tapping them is instant; rarer screens and dialogs load on demand and are warmed in idle time. */
 const loadClientJourney = () => import("@/components/hub/ClientJourney").then((module) => ({ default: module.ClientJourney }));
-const ClientJourney = lazy(loadClientJourney);
+const ClientJourney = lazyPage(loadClientJourney);
 const loadIntegrationsPage = () => import("@/components/hub/IntegrationsPage").then((module) => ({ default: module.IntegrationsPage }));
-const IntegrationsPage = lazy(loadIntegrationsPage);
+const IntegrationsPage = lazyPage(loadIntegrationsPage);
 const loadSettingsPage = () => import("@/components/hub/SettingsPage").then((module) => ({ default: module.SettingsPage }));
-const SettingsPage = lazy(loadSettingsPage);
+const SettingsPage = lazyPage(loadSettingsPage);
 const loadTransactionDetail = () => import("@/components/hub/TransactionDetail").then((module) => ({ default: module.TransactionDetail }));
-const TransactionDetail = lazy(loadTransactionDetail);
+const TransactionDetail = lazyPage(loadTransactionDetail);
 const loadTransactionFormDialog = () => import("@/components/hub/TransactionForm").then((module) => ({ default: module.TransactionFormDialog }));
-const TransactionFormDialog = lazy(loadTransactionFormDialog);
+const TransactionFormDialog = lazyPage(loadTransactionFormDialog);
 const loadVendorsPage = () => import("@/components/hub/VendorsPage").then((module) => ({ default: module.VendorsPage }));
-const VendorsPage = lazy(loadVendorsPage);
+const VendorsPage = lazyPage(loadVendorsPage);
 const PAGE_LOADERS = [loadClientJourney, loadIntegrationsPage, loadSettingsPage, loadTransactionDetail, loadTransactionFormDialog, loadVendorsPage];
 
 const CLIENT_MODE_PATHS: string[] = ["/client-preview", "/home-hub"];
@@ -67,7 +68,7 @@ export default function Hub() {
 
 
   useEffect(() => {
-    const warm = () => PAGE_LOADERS.forEach((load) => void load());
+    const warm = () => PAGE_LOADERS.forEach((load) => void load().catch(() => undefined));
     if (typeof window.requestIdleCallback === "function") {
       const handle = window.requestIdleCallback(warm);
       return () => window.cancelIdleCallback(handle);

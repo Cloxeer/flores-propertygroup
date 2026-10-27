@@ -5,7 +5,7 @@
  * Owns: top-level routing and provider order.
  * Depends on: pages/Landing, pages/Hub, pages/NotFound, ClientPortal, contexts, lib/router-hook.
  */
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { Route, Router, Switch, useLocation } from "wouter";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,9 +15,10 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Hub from "@/pages/Hub";
 import Landing from "@/pages/Landing";
 import NotFound from "@/pages/NotFound";
+import { lazyPage } from "@/lib/lazy-page";
 import { routerHooks } from "@/lib/router-hook";
 
-const ClientPortal = lazy(() => import("@/components/hub/ClientPortal").then((module) => ({ default: module.ClientPortal })));
+const ClientPortal = lazyPage<{ token: string }>(() => import("@/components/hub/ClientPortal").then((module) => ({ default: module.ClientPortal })));
 
 const HUB_ROUTES: string[] = [
   "/",

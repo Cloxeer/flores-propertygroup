@@ -1,12 +1,13 @@
 /**
- * ELI5: A safety net that shows a friendly error screen instead of a blank page.
- * What: React class error boundary rendering the error stack and a reload button.
+ * ELI5: A safety net that shows a calm, plain-English screen instead of a wall of code if something breaks.
+ * What: React class error boundary. A stale-version file error reloads once on its own; anything else shows a
+ *       friendly message, a Reload button, and the technical detail tucked behind "Show details".
  * Owns: top-level render-error fallback UI.
- * Depends on: lib/utils (cn), lucide-react.
+ * Depends on: lib/lazy-page, lucide-react, styles/landing.css.
  */
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import { RotateCcw, TriangleAlert } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { RotateCcw } from "lucide-react";
+import { isChunkLoadError, reloadOnceForNewVersion } from "@/lib/lazy-page";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -29,35 +30,38 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
     console.error("[ErrorBoundary]", error, info.componentStack);
+    if (isChunkLoadError(error)) {
+      reloadOnceForNewVersion();
+    }
   }
 
   render(): ReactNode {
     if (!this.state.hasError) {
       return this.props.children;
     }
+    const staleVersion = isChunkLoadError(this.state.error);
     return (
-      <div className="flex items-center justify-center min-h-screen p-8 bg-background">
-        <div className="flex flex-col items-center w-full max-w-2xl p-8">
-          <TriangleAlert size={48} className="text-destructive mb-6 flex-shrink-0" />
-          <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
-          <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
-            <pre className="text-sm text-muted-foreground whitespace-break-spaces">
-              {this.state.error?.stack}
-            </pre>
+      <main className="landing error-screen">
+        <section className="landing-hero">
+          <span className="landing-pill">{staleVersion ? "Update ready" : "Something went wrong"}</span>
+          <h1>{staleVersion ? "There’s a newer version." : "That didn’t load."}</h1>
+          <p>
+            {staleVersion
+              ? "Reload to pick it up. Anything you saved on this device is still here."
+              : "Reload and you’ll be right back. Anything you saved on this device is safe."}
+          </p>
+          <div className="landing-actions">
+            <button className="button primary" onClick={() => window.location.reload()}>
+              <RotateCcw size={16} />
+              Reload
+            </button>
           </div>
-          <button
-            onClick={() => window.location.reload()}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-lg",
-              "bg-primary text-primary-foreground",
-              "hover:opacity-90 cursor-pointer",
-            )}
-          >
-            <RotateCcw size={16} />
-            Reload Page
-          </button>
-        </div>
-      </div>
+          <details className="error-details">
+            <summary>Show details</summary>
+            <pre>{this.state.error?.message}</pre>
+          </details>
+        </section>
+      </main>
     );
   }
 }
